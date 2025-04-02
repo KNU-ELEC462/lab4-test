@@ -15,8 +15,13 @@ proc run_test {desc input expected_pw expected_stars} {
   set full_output $expect_out(buffer)
 
   # Extract password from final output line
-  regexp {Password entered: (.*)} $full_output _ pw
-  set pw [string trim $pw]  ;# Remove trailing newline or space
+  if {[regexp {Password entered: (.*)} $full_output _ pw]} {
+    set pw [string trim $pw]
+  } else {
+    puts "FAIL: Could not extract password from output"
+    puts "Full output:\n$full_output"
+    exit 1
+  }
 
   # Count asterisk characters
   set star_count 0
@@ -49,4 +54,4 @@ run_test "Test 1: Normal input" "codecafe\r" "codecafe" 8
 # Test 2: Backspace input
 # Input: deadbeef <BS><BS><BS> 33 -> final: deadb33
 # '*' shown: 8 (deadbeef) - 3 (backspace removes) + 2 (33) = 10
-run_test "Test 2: Backspace input" "deadbeef\x7f\x7f\x7f33\r" "deadb33" 10
+run_test "Test 2: Backspace input" "deadbeef\x08\x08\x0833\r" "deadb33" 10
