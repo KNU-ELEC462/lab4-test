@@ -41,11 +41,19 @@ echo -e "${GREEN}[INFO] Git user: $name <$email>${NC}"
 
 # Step 3: Pull latest changes to avoid conflicts
 echo -e "${GREEN}[INFO] Pulling latest changes from remote...${NC}"
-if git pull --rebase; then
-  echo -e "${GREEN}[INFO] Repository is up to date.${NC}"
+if git diff --quiet && git diff --cached --quiet; then
+  # No local changes, safe to pull
+  git pull --rebase
 else
-  echo -e "${RED}[ERROR] Failed to pull latest changes. Please resolve conflicts manually.${NC}"
-  exit 1
+  echo -e "${GREEN}[INFO] Local changes detected. Stashing temporarily...${NC}"
+  git stash push -m "auto-temp-stash"
+  if git pull --rebase; then
+    echo -e "${GREEN}[INFO] Pull completed. Restoring local changes...${NC}"
+    git stash pop || true
+  else
+    echo -e "${RED}[ERROR] Failed to pull latest changes. Please resolve conflicts manually.${NC}"
+    exit 1
+  fi
 fi
 
 # Step 4: Stage all changes

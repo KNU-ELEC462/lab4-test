@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 TARGET="pw_input"
 SRC="${TARGET}.c"
