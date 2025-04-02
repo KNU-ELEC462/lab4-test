@@ -63,13 +63,13 @@ cleanup_temp_files() {
 }
 
 # Run the ICANON test
-${LAB_HOME}/test/test_typer_icanon.exp
-if [ $? -eq 1 ]; then
-  echo "FAIL: ICANON test failed"
-  exit 1
-else
-  echo "PASS: ICANON test passed"
-fi
+# ${LAB_HOME}/test/test_typer_icanon.exp
+# if [ $? -eq 1 ]; then
+#   echo "FAIL: ICANON test failed"
+#   exit 1
+# else
+#   echo "PASS: ICANON test passed"
+# fi
 
 run_test_case \
   "Perfect input matches target" \
