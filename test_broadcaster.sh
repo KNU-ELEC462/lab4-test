@@ -7,8 +7,8 @@ PTS_INFO="/tmp/pts_info.txt"
 BINARY="./broadcaster"
 ERROR_LOG="/tmp/broadcast_error.log"
 
-SRC="broadcaster.c"
 TARGET="broadcaster"
+SRC="${TARGET}.c"
 
 # Cleanup function to terminate background processes and remove temp files
 cleanup() {
