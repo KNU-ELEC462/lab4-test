@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SRC="typer.c"
 TARGET="typer"
+SRC="${TARGET}.c"
 
 # Check if source file exists
 if [[ ! -f "$SRC" ]]; then
